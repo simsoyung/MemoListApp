@@ -9,21 +9,49 @@
 /* Begin PBXBuildFile section */
 		46E28A5E2C33E70500AB3843 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A5D2C33E70500AB3843 /* AppDelegate.swift */; };
 		46E28A602C33E70500AB3843 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */; };
-		46E28A622C33E70500AB3843 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A612C33E70500AB3843 /* ViewController.swift */; };
-		46E28A652C33E70500AB3843 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 46E28A642C33E70500AB3843 /* Base */; };
 		46E28A672C33E70800AB3843 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46E28A662C33E70800AB3843 /* Assets.xcassets */; };
 		46E28A6A2C33E70800AB3843 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 46E28A692C33E70800AB3843 /* Base */; };
+		46E28A732C33E7CF00AB3843 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A722C33E7CF00AB3843 /* BaseViewController.swift */; };
+		46E28A762C33E88200AB3843 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A752C33E88200AB3843 /* MemoListViewController.swift */; };
+		46E28A792C33E8DE00AB3843 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A782C33E8DE00AB3843 /* DataBase.swift */; };
+		46E28A7C2C33E91300AB3843 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46E28A7B2C33E91300AB3843 /* RealmSwift */; };
+		46E28A7D2C33EA2000AB3843 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 46E28A7B2C33E91300AB3843 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		46E28A812C33EB6400AB3843 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 46E28A802C33EB6400AB3843 /* SnapKit */; };
+		46E28A842C33EB7200AB3843 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 46E28A832C33EB7200AB3843 /* Toast */; };
+		46E28A872C33EBE500AB3843 /* InsertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A862C33EBE500AB3843 /* InsertViewController.swift */; };
+		46E28A8B2C33F83D00AB3843 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A8A2C33F83D00AB3843 /* Button.swift */; };
+		46E28A8D2C33FC0C00AB3843 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A8C2C33FC0C00AB3843 /* Extension.swift */; };
+		46E28A8F2C343C1E00AB3843 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A8E2C343C1E00AB3843 /* TextField.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		46E28A7E2C33EA2000AB3843 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				46E28A7D2C33EA2000AB3843 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		46E28A5A2C33E70500AB3843 /* MemoListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E28A5D2C33E70500AB3843 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		46E28A612C33E70500AB3843 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		46E28A642C33E70500AB3843 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		46E28A662C33E70800AB3843 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		46E28A692C33E70800AB3843 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		46E28A6B2C33E70800AB3843 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46E28A722C33E7CF00AB3843 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		46E28A752C33E88200AB3843 /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
+		46E28A782C33E8DE00AB3843 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
+		46E28A862C33EBE500AB3843 /* InsertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertViewController.swift; sourceTree = "<group>"; };
+		46E28A8A2C33F83D00AB3843 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		46E28A8C2C33FC0C00AB3843 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		46E28A8E2C343C1E00AB3843 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E28A842C33EB7200AB3843 /* Toast in Frameworks */,
+				46E28A7C2C33E91300AB3843 /* RealmSwift in Frameworks */,
+				46E28A812C33EB6400AB3843 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +87,68 @@
 		46E28A5C2C33E70500AB3843 /* MemoListApp */ = {
 			isa = PBXGroup;
 			children = (
+				46E28A892C33F82500AB3843 /* Custom */,
+				46E28A882C33F81D00AB3843 /* Extension */,
+				46E28A852C33EBC700AB3843 /* Insert */,
+				46E28A772C33E8CF00AB3843 /* DataBase */,
+				46E28A742C33E86900AB3843 /* Memo */,
+				46E28A712C33E7BE00AB3843 /* Base */,
 				46E28A5D2C33E70500AB3843 /* AppDelegate.swift */,
 				46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */,
-				46E28A612C33E70500AB3843 /* ViewController.swift */,
-				46E28A632C33E70500AB3843 /* Main.storyboard */,
 				46E28A662C33E70800AB3843 /* Assets.xcassets */,
 				46E28A682C33E70800AB3843 /* LaunchScreen.storyboard */,
 				46E28A6B2C33E70800AB3843 /* Info.plist */,
 			);
 			path = MemoListApp;
+			sourceTree = "<group>";
+		};
+		46E28A712C33E7BE00AB3843 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				46E28A722C33E7CF00AB3843 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		46E28A742C33E86900AB3843 /* Memo */ = {
+			isa = PBXGroup;
+			children = (
+				46E28A752C33E88200AB3843 /* MemoListViewController.swift */,
+			);
+			path = Memo;
+			sourceTree = "<group>";
+		};
+		46E28A772C33E8CF00AB3843 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				46E28A782C33E8DE00AB3843 /* DataBase.swift */,
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
+		46E28A852C33EBC700AB3843 /* Insert */ = {
+			isa = PBXGroup;
+			children = (
+				46E28A862C33EBE500AB3843 /* InsertViewController.swift */,
+			);
+			path = Insert;
+			sourceTree = "<group>";
+		};
+		46E28A882C33F81D00AB3843 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				46E28A8C2C33FC0C00AB3843 /* Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		46E28A892C33F82500AB3843 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				46E28A8A2C33F83D00AB3843 /* Button.swift */,
+				46E28A8E2C343C1E00AB3843 /* TextField.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,12 +161,18 @@
 				46E28A562C33E70500AB3843 /* Sources */,
 				46E28A572C33E70500AB3843 /* Frameworks */,
 				46E28A582C33E70500AB3843 /* Resources */,
+				46E28A7E2C33EA2000AB3843 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MemoListApp;
+			packageProductDependencies = (
+				46E28A7B2C33E91300AB3843 /* RealmSwift */,
+				46E28A802C33EB6400AB3843 /* SnapKit */,
+				46E28A832C33EB7200AB3843 /* Toast */,
+			);
 			productName = MemoListApp;
 			productReference = 46E28A5A2C33E70500AB3843 /* MemoListApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +201,11 @@
 				Base,
 			);
 			mainGroup = 46E28A512C33E70500AB3843;
+			packageReferences = (
+				46E28A7A2C33E91300AB3843 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				46E28A7F2C33EB6300AB3843 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				46E28A822C33EB7200AB3843 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+			);
 			productRefGroup = 46E28A5B2C33E70500AB3843 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,7 +222,6 @@
 			files = (
 				46E28A672C33E70800AB3843 /* Assets.xcassets in Resources */,
 				46E28A6A2C33E70800AB3843 /* Base in Resources */,
-				46E28A652C33E70500AB3843 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +232,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46E28A622C33E70500AB3843 /* ViewController.swift in Sources */,
+				46E28A8B2C33F83D00AB3843 /* Button.swift in Sources */,
+				46E28A792C33E8DE00AB3843 /* DataBase.swift in Sources */,
+				46E28A762C33E88200AB3843 /* MemoListViewController.swift in Sources */,
+				46E28A732C33E7CF00AB3843 /* BaseViewController.swift in Sources */,
+				46E28A872C33EBE500AB3843 /* InsertViewController.swift in Sources */,
 				46E28A5E2C33E70500AB3843 /* AppDelegate.swift in Sources */,
+				46E28A8F2C343C1E00AB3843 /* TextField.swift in Sources */,
 				46E28A602C33E70500AB3843 /* SceneDelegate.swift in Sources */,
+				46E28A8D2C33FC0C00AB3843 /* Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		46E28A632C33E70500AB3843 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				46E28A642C33E70500AB3843 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		46E28A682C33E70800AB3843 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -296,9 +388,9 @@
 				INFOPLIST_FILE = MemoListApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,9 +398,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soyung.MemoListApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -323,9 +419,9 @@
 				INFOPLIST_FILE = MemoListApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -333,9 +429,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soyung.MemoListApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -361,6 +461,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		46E28A7A2C33E91300AB3843 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.52.1;
+			};
+		};
+		46E28A7F2C33EB6300AB3843 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		46E28A822C33EB7200AB3843 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		46E28A7B2C33E91300AB3843 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46E28A7A2C33E91300AB3843 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		46E28A802C33EB6400AB3843 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46E28A7F2C33EB6300AB3843 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		46E28A832C33EB7200AB3843 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46E28A822C33EB7200AB3843 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 46E28A522C33E70500AB3843 /* Project object */;
 }
