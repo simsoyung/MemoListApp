@@ -19,8 +19,8 @@ class ContentsView: UIView {
     var detailLabel: UILabel = {
         let label = UILabel()
         label.text = "마감일"
-        label.textColor = .black
-        label.backgroundColor = .systemGray5
+        label.textColor = .darkGray
+        label.backgroundColor = .systemGray6
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         label.textAlignment = .left
@@ -54,7 +54,7 @@ class ContentsView: UIView {
         }
     }
     func configureUI(){
-        backgroundColor = .systemGray5
+        backgroundColor = .systemGray6
     }
     
     @available(*, unavailable)

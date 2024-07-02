@@ -7,6 +7,14 @@
 
 import UIKit
 
+extension UILabel {
+    func cellLabel(size: CGFloat, fontWeight: UIFont.Weight, color: UIColor) {
+        self.numberOfLines = 0
+        self.font = .systemFont(ofSize: size, weight: fontWeight)
+        self.textColor = color
+    }
+}
+
 extension UIImageView {
     func makeLine(){
         self.backgroundColor = .lightGray
@@ -16,17 +24,24 @@ extension UIImageView {
 extension UITextView { 
     func overview(){
         self.clipsToBounds = true
-        self.backgroundColor = .systemGray5
-        self.font = .systemFont(ofSize: 15, weight: .heavy)
+        self.backgroundColor = .systemGray6
+        self.font = .systemFont(ofSize: 15, weight: .medium)
+        self.textColor = .lightGray
     }
 }
 
 extension UITextField { 
     func titleTextField(){
-        self.backgroundColor = .systemGray5
+        self.backgroundColor = .systemGray6
         self.placeholder = "제목"
-        self.textColor = .black
+        self.textColor = .darkGray
         self.clipsToBounds = true
-        self.font = .systemFont(ofSize: 15, weight: .heavy)
+        self.font = .systemFont(ofSize: 15, weight: .medium)
+    }
+}
+
+extension UITableViewCell {
+    static var id: String {
+       return String(describing: self)
     }
 }
