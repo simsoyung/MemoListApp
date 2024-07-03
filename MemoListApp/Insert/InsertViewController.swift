@@ -91,7 +91,7 @@ final class InsertViewController: BaseViewController {
     }
     @objc func priorityAddClicked() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        [ UIAlertAction(title: "등록순", style: .default, handler: { action in
+        [ UIAlertAction(title: "최근등록순", style: .default, handler: { action in
             self.priority?(action.title ?? "")
             self.priority = { value in
                 self.priorityAddView.resultLabel.text = value

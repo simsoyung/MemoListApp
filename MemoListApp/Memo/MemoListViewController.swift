@@ -15,7 +15,7 @@ class MemoListViewController: BaseViewController {
             UIAction(title: "날짜순", handler: { _ in
                 self.deadlineDateReload()
             }),
-            UIAction(title: "등록순", handler: { _ in
+            UIAction(title: "최근등록순", handler: { _ in
                 self.makeDateReload()
             }),
         ]
@@ -46,13 +46,11 @@ class MemoListViewController: BaseViewController {
         tableview.reloadData()
     }
     func makeDateReload(){
-        list = realm.objects(List.self).sorted(byKeyPath: "creatDate", ascending: true)
+        list = realm.objects(List.self).sorted(byKeyPath: "creatDate", ascending: false)
         tableview.reloadData()
     }
     
     func settingNavigationBarButton(){
-        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.compose, target: self, action: #selector(leftButtonTapped))
-        self.navigationItem.leftBarButtonItem = leftButton
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
             menu: menu)
     }
@@ -61,13 +59,6 @@ class MemoListViewController: BaseViewController {
         OperationQueue.main.addOperation {
             self.tableview.reloadData()
         }
-    }
-    
-    @objc func leftButtonTapped(){
-        let insertView = InsertViewController()
-        let nav = UINavigationController(rootViewController: insertView)
-        nav.modalPresentationStyle = .pageSheet
-        self.present(nav, animated: true, completion: { self.tableview.reloadData()} )
     }
 
     override func configureView() {

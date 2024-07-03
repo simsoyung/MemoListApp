@@ -27,6 +27,8 @@
 		46E28A952C34471900AB3843 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A942C34471900AB3843 /* RadioButton.swift */; };
 		46E28A9D2C352A0F00AB3843 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A9C2C352A0F00AB3843 /* DatePickerViewController.swift */; };
 		46E28A9F2C35407600AB3843 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A9E2C35407600AB3843 /* TagViewController.swift */; };
+		46E28AA12C3576E500AB3843 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28AA02C3576E500AB3843 /* MainViewController.swift */; };
+		46E28AA52C357FFB00AB3843 /* MainTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28AA42C357FFB00AB3843 /* MainTypeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +64,8 @@
 		46E28A942C34471900AB3843 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
 		46E28A9C2C352A0F00AB3843 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		46E28A9E2C35407600AB3843 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		46E28AA02C3576E500AB3843 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		46E28AA42C357FFB00AB3843 /* MainTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTypeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				46E28A752C33E88200AB3843 /* MemoListViewController.swift */,
+				46E28AA02C3576E500AB3843 /* MainViewController.swift */,
 				46E28A922C34457A00AB3843 /* MemoTableViewCell.swift */,
 			);
 			path = Memo;
@@ -161,6 +166,7 @@
 				46E28A8A2C33F83D00AB3843 /* ContentView.swift */,
 				46E28A8E2C343C1E00AB3843 /* TextField.swift */,
 				46E28A942C34471900AB3843 /* RadioButton.swift */,
+				46E28AA42C357FFB00AB3843 /* MainTypeView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -264,9 +270,11 @@
 				46E28A872C33EBE500AB3843 /* InsertViewController.swift in Sources */,
 				46E28A932C34457A00AB3843 /* MemoTableViewCell.swift in Sources */,
 				46E28A5E2C33E70500AB3843 /* AppDelegate.swift in Sources */,
+				46E28AA12C3576E500AB3843 /* MainViewController.swift in Sources */,
 				46E28A8F2C343C1E00AB3843 /* TextField.swift in Sources */,
 				46E28A602C33E70500AB3843 /* SceneDelegate.swift in Sources */,
 				46E28A912C34453300AB3843 /* BaseTableViewCell.swift in Sources */,
+				46E28AA52C357FFB00AB3843 /* MainTypeView.swift in Sources */,
 				46E28A8D2C33FC0C00AB3843 /* Extension.swift in Sources */,
 				46E28A9F2C35407600AB3843 /* TagViewController.swift in Sources */,
 			);

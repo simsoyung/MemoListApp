@@ -45,3 +45,15 @@ extension UITableViewCell {
        return String(describing: self)
     }
 }
+
+
+extension UIButton {
+    func settingButton(text: String, imageName: String){
+        self.configuration?.title = text
+        self.configuration?.image = UIImage(systemName: imageName)
+        self.configuration?.baseForegroundColor = .darkGray
+        self.configuration?.imagePadding = 10
+        self.configuration?.imagePlacement = .leading
+        self.contentHorizontalAlignment = .center
+    }
+}
