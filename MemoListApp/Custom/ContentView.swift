@@ -18,7 +18,6 @@ class ContentsView: UIView {
     }()
     var detailLabel: UILabel = {
         let label = UILabel()
-        label.text = "마감일"
         label.textColor = .darkGray
         label.backgroundColor = .systemGray6
         label.layer.cornerRadius = 10
@@ -27,17 +26,27 @@ class ContentsView: UIView {
         label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
+    var resultLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.backgroundColor = .systemGray6
+        label.textAlignment = .right
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        return label
+    }()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, textLabel: String) {
         super.init(frame: frame)
         configureHierarchy()
         configureLayout()
         configureUI()
+        detailLabel.text = textLabel
     }
     
     func configureHierarchy(){
         addSubview(addButton)
         addSubview(detailLabel)
+        addSubview(resultLabel)
         layer.cornerRadius = 10
         clipsToBounds = true
     }
@@ -46,6 +55,11 @@ class ContentsView: UIView {
             make.centerY.equalTo(self)
             make.leading.equalTo(self).inset(20)
             make.height.equalTo(30)
+        }
+        resultLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(self)
+            make.trailing.equalTo(addButton.snp.leading)
+            make.height.equalTo(20)
         }
         addButton.snp.makeConstraints { make in
             make.centerY.equalTo(self)

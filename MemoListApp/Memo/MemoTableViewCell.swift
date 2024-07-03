@@ -45,7 +45,7 @@ final class MemoTableViewCell: BaseTableViewCell {
         }
         categoryLabel.snp.makeConstraints { make in
             make.top.equalTo(detailContentLabel.snp.bottom).offset(5)
-            make.leading.equalTo(dateLabel.snp.trailing)
+            make.leading.equalTo(dateLabel.snp.trailing).offset(5)
             make.height.equalTo(14)
         }
     }

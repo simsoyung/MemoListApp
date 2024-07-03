@@ -13,15 +13,18 @@ final class List: Object {
     @Persisted(indexed: true) var memoName: String //메모이름
     @Persisted var memoDetail: String? //메모내용(옵션)
     @Persisted var category: String? // 카테고리(옵션)
-    @Persisted var dataName: Data? // 생성일(옵션)
+    @Persisted var creatDate: Date // 생성일(필수)
+    @Persisted var deadlineDate: String?
     @Persisted var checkButton: Bool = false
     
-    convenience init(memoName: String, memoDetail: String?, category: String?, dataName: Data?) {
+    convenience init(memoName: String, memoDetail: String?, category: String?, creatDate: Date, deadlineDate: String?, checkButton: Bool) {
         self.init()
         self.memoName = memoName
         self.memoDetail = memoDetail
         self.category = category
-        self.dataName = dataName
+        self.creatDate = creatDate
+        self.deadlineDate = deadlineDate
+        self.checkButton = checkButton
     }
     
 }

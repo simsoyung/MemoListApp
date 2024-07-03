@@ -10,7 +10,19 @@ import RealmSwift
 import SnapKit
 
 class MemoListViewController: BaseViewController {
-    
+    lazy var menuItems: [UIAction] = {
+        return [
+            UIAction(title: "날짜순", handler: { _ in
+                self.deadlineDateReload()
+            }),
+            UIAction(title: "등록순", handler: { _ in
+                self.makeDateReload()
+            }),
+        ]
+    }()
+    lazy var menu: UIMenu = {
+        return UIMenu(title: "", options: [], children: menuItems)
+    }()
     lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.text = "전체"
@@ -22,22 +34,27 @@ class MemoListViewController: BaseViewController {
     let realm = try! Realm()
     var tableview = UITableView()
     
-
-    override func viewIsAppearing(_ animated: Bool) {
-        super.viewIsAppearing(animated)
-        print(#function)
-        tableview.reloadData()
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         settingNavigationBarButton()
         list = realm.objects(List.self)
         NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
+
+    }
+    func deadlineDateReload(){
+        list = realm.objects(List.self).sorted(byKeyPath: "deadlineDate", ascending: true)
+        tableview.reloadData()
+    }
+    func makeDateReload(){
+        list = realm.objects(List.self).sorted(byKeyPath: "creatDate", ascending: true)
+        tableview.reloadData()
     }
     
     func settingNavigationBarButton(){
         let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.compose, target: self, action: #selector(leftButtonTapped))
         self.navigationItem.leftBarButtonItem = leftButton
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
+            menu: menu)
     }
     
     @objc func insertViewController(_ noti: Notification) {
@@ -105,6 +122,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.titleNameLabel.text = data.memoName
         cell.detailContentLabel.text = data.memoDetail
         cell.categoryLabel.text = data.category
+        cell.dateLabel.text = data.deadlineDate
         return cell
     }
 }
