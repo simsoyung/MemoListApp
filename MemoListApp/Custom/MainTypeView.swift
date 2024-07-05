@@ -31,14 +31,12 @@ class MainTypeView: UIView {
         return label
     }()
     
-    init(frame: CGRect, imageView: String, typeName: String, cololr: UIColor) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         configureHierarchy()
         configureLayout()
         configureUI()
-        listimageView.image = UIImage(systemName: imageView)
-        typeLabel.text = typeName
-        listimageView.backgroundColor = cololr
+
     }
     
     func configureHierarchy(){

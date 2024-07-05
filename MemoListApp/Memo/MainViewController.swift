@@ -11,18 +11,27 @@ import RealmSwift
 
 final class MainViewController: BaseViewController {
 
-    let todayCell = MainTypeView(frame: .zero, imageView: "text.badge.checkmark", typeName: "오늘", cololr: UIColor.systemBlue)
-    let scheduleCell = MainTypeView(frame: .zero, imageView: "calendar", typeName: "예정", cololr: UIColor.systemRed)
-    let allCell = MainTypeView(frame: .zero, imageView: "tray.fill", typeName: "전체", cololr: UIColor.systemGray)
-    let importantCell = MainTypeView(frame: .zero, imageView: "flag.fill", typeName: "깃발 표시", cololr: UIColor.systemYellow)
-    let finishCell = MainTypeView(frame: .zero, imageView: "checkmark", typeName: "완료됨", cololr: UIColor.systemGreen)
-    
+    var selectedList = [
+    ["text.badge.checkmark","calendar","tray.fill","flag.fill","checkmark" ],
+    ["오늘","예정","전체","깃발 표시","완료됨"],
+    ]
+    var colorList: [UIColor] =     [UIColor.systemBlue,UIColor.systemRed,UIColor.systemGray,UIColor.systemYellow,UIColor.systemGreen]
     var list: Results<List>!
     let realm = try! Realm()
     let buttonConfig = UIButton.Configuration.plain()
     lazy var insertButton = UIButton(configuration: buttonConfig)
-    lazy var listTableButton = UIButton(configuration: buttonConfig)
-    
+    lazy var calendarButton = UIButton(configuration: buttonConfig)
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+
+    static func layout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 180, height: 100)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return layout
+    }
     lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.text = "전체"
@@ -33,88 +42,77 @@ final class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        list = realm.objects(List.self)
+        NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
     }
     override func configureView() {
         super.configureView()
         insertButton.contentMode = .center
         insertButton.settingButton(text: "새로운 할 일", imageName: "plus.circle.fill")
-        listTableButton.settingButton(text: "목록 추가", imageName: "list.clipboard.fill")
+        calendarButton.settingButton(text: "캘린더", imageName: "list.clipboard.fill")
         insertButton.addTarget(self, action: #selector(insertClicked), for: .touchUpInside)
-        listTableButton.addTarget(self, action: #selector(listTableClicked), for: .touchUpInside)
-        let results = realm.objects(List.self)
-        todayCell.numLabel.text = "0"
-        scheduleCell.numLabel.text = "0"
-        allCell.numLabel.text = "\(results.count)"
-        importantCell.numLabel.text = "0"
-        finishCell.numLabel.text = "0"
+        calendarButton.addTarget(self, action: #selector(calendarClicked), for: .touchUpInside)
         
     }
     override func configureHierarchy() {
         view.addSubview(headerLabel)
-        view.addSubview(todayCell)
-        view.addSubview(scheduleCell)
-        view.addSubview(allCell)
-        view.addSubview(importantCell)
-        view.addSubview(finishCell)
+        view.addSubview(collectionView)
         view.addSubview(insertButton)
-        view.addSubview(listTableButton)
+        view.addSubview(calendarButton)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(MemoCollectionViewCell.self, forCellWithReuseIdentifier: MemoCollectionViewCell.id)
     }
     override func configureConstraints() {
         headerLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
             make.height.equalTo(50)
         }
-        todayCell.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(headerLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.height.equalTo(100)
-            make.width.equalTo(180)
-        }
-        allCell.snp.makeConstraints { make in
-            make.top.equalTo(todayCell.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.height.equalTo(100)
-            make.width.equalTo(180)
-        }
-        finishCell.snp.makeConstraints { make in
-            make.top.equalTo(allCell.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.height.equalTo(100)
-            make.width.equalTo(180)
-        }
-        scheduleCell.snp.makeConstraints { make in
-            make.top.equalTo(headerLabel.snp.bottom).offset(10)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(100)
-            make.width.equalTo(180)
-        }
-        importantCell.snp.makeConstraints { make in
-            make.top.equalTo(scheduleCell.snp.bottom).offset(10)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(100)
-            make.width.equalTo(180)
         }
         insertButton.snp.makeConstraints { make in
             make.bottom.leading.equalTo(view.safeAreaLayoutGuide).inset(30)
             make.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
         }
-        listTableButton.snp.makeConstraints { make in
+        calendarButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
         }
     }
-    
+    @objc func insertViewController(_ noti: Notification) {
+        OperationQueue.main.addOperation {
+            self.collectionView.reloadData()
+        }
+    }
     @objc func insertClicked(){
         let insertView = InsertViewController()
         let nav = UINavigationController(rootViewController: insertView)
         nav.modalPresentationStyle = .pageSheet
         self.present(nav, animated: true )
     }
-    @objc func listTableClicked(){
+    @objc func calendarClicked(){
         let newViewController = MemoListViewController()
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
+}
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        selectedList[0].count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoCollectionViewCell.id, for: indexPath) as! MemoCollectionViewCell
+        let results = realm.objects(List.self)
+        cell.collectionCell.numLabel.text = "\(results.count)"
+        cell.collectionCell.listimageView.image = UIImage(systemName: selectedList[0][indexPath.row])
+        cell.collectionCell.typeLabel.text = selectedList[1][indexPath.row]
+        cell.collectionCell.listimageView.backgroundColor = colorList[indexPath.row]
+        return cell
+    }
+    
+    
 }

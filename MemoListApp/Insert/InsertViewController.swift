@@ -65,8 +65,6 @@ final class InsertViewController: BaseViewController {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
         }
-
-        
     }
     
     @objc func dateAddClicked() {
@@ -93,15 +91,17 @@ final class InsertViewController: BaseViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         [ UIAlertAction(title: "최근등록순", style: .default, handler: { action in
             self.priority?(action.title ?? "")
-            self.priority = { value in
-                self.priorityAddView.resultLabel.text = value
-            }
+            self.priorityAddView.resultLabel.text = action.title
+//            self.priority = { value in
+//                self.priorityAddView.resultLabel.text = value
+//            }
         }),
           UIAlertAction(title: "날짜순", style: .default, handler: { action in
             self.priority?(action.title ?? "")
-            self.priority = { value in
-                self.priorityAddView.resultLabel.text = value
-            }
+            self.priorityAddView.resultLabel.text = action.title
+//            self.priority = { value in
+//                self.priorityAddView.resultLabel.text = value
+//            }
         }),
           UIAlertAction(title: "닫기", style: .destructive)
         ].forEach{ actionSheet.addAction($0) }

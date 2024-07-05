@@ -7,15 +7,19 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
 final class MemoTableViewCell: BaseTableViewCell {
-    
-    var radioButton = RadioButton()
+    var radioButton = UIButton()
     var titleNameLabel =  UILabel()
     var detailContentLabel = UILabel()
     var categoryLabel = UILabel()
     var dateLabel = UILabel()
 
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        //radioButton.setImage(UIImage(systemName: "circle"), for: .normal)
+    }
     override func configureView() {
         titleNameLabel.cellLabel(size: 15, fontWeight: .heavy, color: .black)
         detailContentLabel.cellLabel(size: 13, fontWeight: .medium, color: .darkGray)

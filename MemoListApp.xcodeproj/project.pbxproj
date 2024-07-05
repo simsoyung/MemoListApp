@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46A797C52C3686C8008C86BA /* MemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A797C42C3686C8008C86BA /* MemoCollectionViewCell.swift */; };
 		46E28A5E2C33E70500AB3843 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A5D2C33E70500AB3843 /* AppDelegate.swift */; };
 		46E28A602C33E70500AB3843 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */; };
 		46E28A672C33E70800AB3843 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46E28A662C33E70800AB3843 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		46A797C42C3686C8008C86BA /* MemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		46E28A5A2C33E70500AB3843 /* MemoListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E28A5D2C33E70500AB3843 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				46E28A752C33E88200AB3843 /* MemoListViewController.swift */,
 				46E28AA02C3576E500AB3843 /* MainViewController.swift */,
 				46E28A922C34457A00AB3843 /* MemoTableViewCell.swift */,
+				46A797C42C3686C8008C86BA /* MemoCollectionViewCell.swift */,
 			);
 			path = Memo;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				46E28A602C33E70500AB3843 /* SceneDelegate.swift in Sources */,
 				46E28A912C34453300AB3843 /* BaseTableViewCell.swift in Sources */,
 				46E28AA52C357FFB00AB3843 /* MainTypeView.swift in Sources */,
+				46A797C52C3686C8008C86BA /* MemoCollectionViewCell.swift in Sources */,
 				46E28A8D2C33FC0C00AB3843 /* Extension.swift in Sources */,
 				46E28A9F2C35407600AB3843 /* TagViewController.swift in Sources */,
 			);

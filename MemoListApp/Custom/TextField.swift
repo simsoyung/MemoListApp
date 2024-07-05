@@ -53,6 +53,8 @@ class TextFieldView: UIView {
         contentTextView.overview()
         imageLineView.makeLine()
         backgroundColor = .systemGray6
+        contentTextView.text = "메모"
+        contentTextView.textColor = .lightGray
     }
     
     @available(*, unavailable)
@@ -62,18 +64,10 @@ class TextFieldView: UIView {
     
 }
 extension TextFieldView: UITextViewDelegate {
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
             textView.text = nil
             textView.textColor = .black
-        }
-        
-    }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "메모"
-            textView.textColor = .lightGray
         }
     }
 }

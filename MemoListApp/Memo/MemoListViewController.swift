@@ -33,13 +33,16 @@ class MemoListViewController: BaseViewController {
     var list: Results<List>!
     let realm = try! Realm()
     var tableview = UITableView()
+    var changeRadio: (() -> Bool)?
     
+    override func viewDidAppear(_ animated: Bool) {
+        tableview.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         settingNavigationBarButton()
         list = realm.objects(List.self)
         NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
-
     }
     func deadlineDateReload(){
         list = realm.objects(List.self).sorted(byKeyPath: "deadlineDate", ascending: true)
@@ -114,6 +117,25 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.detailContentLabel.text = data.memoDetail
         cell.categoryLabel.text = data.category
         cell.dateLabel.text = data.deadlineDate
+        if data.checkButton == false {
+            cell.radioButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        } else {
+            cell.radioButton.setImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
+        }
+        cell.radioButton.tag = indexPath.row
+        cell.radioButton.addTarget(self, action: #selector(toggleRadio(_:)), for: .touchUpInside)
         return cell
+    }
+    
+    @objc func toggleRadio(_ sender: UIButton){
+        let index = sender.tag
+        let item = list[index]
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            try! self.realm.write{
+                item.checkButton.toggle()
+            }
+            tableview.reloadData()
+        }
     }
 }

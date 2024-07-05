@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import RealmSwift
 
 class RadioButton: UIButton {
 
+    let realm = try! Realm()
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                self.setImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
+                self.setImage(UIImage(systemName: "largecircle.fill.circle"), for: .selected)
             } else {
                 self.setImage(UIImage(systemName: "circle"), for: .normal)
             }
