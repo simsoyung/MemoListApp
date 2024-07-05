@@ -10,6 +10,7 @@ import RealmSwift
 import SnapKit
 
 class MemoListViewController: BaseViewController {
+    let insertViewController: Notification.Name = Notification.Name("insertViewController")
     lazy var menuItems: [UIAction] = {
         return [
             UIAction(title: "날짜순", handler: { _ in
@@ -41,8 +42,17 @@ class MemoListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingNavigationBarButton()
-        list = realm.objects(List.self)
+        //list = realm.objects(List.self)
+        print("테이블뷰에 뜨는 리스트",list, list.count)
         NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: insertViewController, object: nil, userInfo: nil)
+    }
+    @objc func insertViewController(_ noti: Notification) {
+        OperationQueue.main.addOperation {
+            self.tableview.reloadData()
+        }
     }
     func deadlineDateReload(){
         list = realm.objects(List.self).sorted(byKeyPath: "deadlineDate", ascending: true)
@@ -56,13 +66,7 @@ class MemoListViewController: BaseViewController {
     func settingNavigationBarButton(){
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
             menu: menu)
-    }
-    
-    @objc func insertViewController(_ noti: Notification) {
-        OperationQueue.main.addOperation {
-            self.tableview.reloadData()
-        }
-    }
+    }    
 
     override func configureView() {
         super.configureView()

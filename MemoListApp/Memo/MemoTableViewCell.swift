@@ -18,7 +18,6 @@ final class MemoTableViewCell: BaseTableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        //radioButton.setImage(UIImage(systemName: "circle"), for: .normal)
     }
     override func configureView() {
         titleNameLabel.cellLabel(size: 15, fontWeight: .heavy, color: .black)
@@ -28,23 +27,23 @@ final class MemoTableViewCell: BaseTableViewCell {
     }
     override func configureLayout() {
         radioButton.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(contentView.safeAreaLayoutGuide)
             make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(20)
-            make.size.equalTo(15)
+            make.size.equalTo(50)
         }
         titleNameLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-            make.leading.equalTo(radioButton.snp.trailing).offset(10)
+            make.leading.equalTo(radioButton.snp.trailing)
             make.height.equalTo(20)
         }
         detailContentLabel.snp.makeConstraints { make in
             make.top.equalTo(titleNameLabel.snp.bottom).offset(2)
-            make.leading.equalTo(radioButton.snp.trailing).offset(10)
+            make.leading.equalTo(radioButton.snp.trailing)
             make.height.equalTo(14)
         }
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(detailContentLabel.snp.bottom).offset(5)
-            make.leading.equalTo(radioButton.snp.trailing).offset(10)
+            make.leading.equalTo(radioButton.snp.trailing)
             make.height.equalTo(14)
         }
         categoryLabel.snp.makeConstraints { make in

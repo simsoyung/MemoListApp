@@ -20,12 +20,14 @@ final class InsertViewController: BaseViewController {
     let tagAddView = ContentsView(frame: .zero, textLabel: "태그")
     let priorityAddView = ContentsView(frame: .zero, textLabel: "우선 순위")
     let imageAddView = ContentsView(frame: .zero, textLabel: "이미지 추가")
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "새로운 할 일"
     }
-
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: insertViewController, object: nil, userInfo: nil)
+    }
     override func configureView() {
         super.configureView()
         settingNavigationBarButton()

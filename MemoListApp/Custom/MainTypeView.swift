@@ -36,7 +36,6 @@ class MainTypeView: UIView {
         configureHierarchy()
         configureLayout()
         configureUI()
-
     }
     
     func configureHierarchy(){
