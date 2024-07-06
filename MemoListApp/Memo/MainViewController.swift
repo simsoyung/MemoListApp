@@ -43,8 +43,6 @@ final class MainViewController: BaseViewController {
     }()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self,selector: #selector(self.didDismissInsert(_:)), name: NSNotification.Name("insertViewController"),object: nil
-        )
         let formatter = DateFormatter()
         formatter.dateFormat = "yyMMdd"
         let dateString = formatter.string(from: Date())
@@ -113,15 +111,14 @@ final class MainViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-    @objc func didDismissInsert(_ noti: Notification) {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
     @objc func insertClicked(){
         let insertView = InsertViewController()
         let nav = UINavigationController(rootViewController: insertView)
         nav.modalPresentationStyle = .pageSheet
+        insertView.onDismiss = {
+            self.viewWillAppear(true)
+            self.collectionView.reloadData()
+        }
         self.present(nav, animated: true )
     }
     @objc func calendarClicked(){
@@ -189,3 +186,5 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         
     }
 }
+
+

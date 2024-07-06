@@ -11,7 +11,7 @@ import Toast
 import SnapKit
 
 final class InsertViewController: BaseViewController {
-    
+
     let insertViewController: Notification.Name = Notification.Name("insertViewController")
     let realm = try! Realm()
     var priority: ((String) -> Void)?
@@ -20,7 +20,8 @@ final class InsertViewController: BaseViewController {
     let tagAddView = ContentsView(frame: .zero, textLabel: "태그")
     let priorityAddView = ContentsView(frame: .zero, textLabel: "우선 순위")
     let imageAddView = ContentsView(frame: .zero, textLabel: "이미지 추가")
-
+    var onDismiss: (() -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "새로운 할 일"
@@ -108,7 +109,6 @@ final class InsertViewController: BaseViewController {
         }),
           UIAlertAction(title: "닫기", style: .destructive)
         ].forEach{ actionSheet.addAction($0) }
-        
         present(actionSheet, animated: true)
     }
     
@@ -131,8 +131,11 @@ final class InsertViewController: BaseViewController {
             print("성공")
         }
         NotificationCenter.default.post(name: insertViewController, object: nil, userInfo: nil)
-        dismiss(animated: true)
+        dismiss(animated: true){
+            self.onDismiss?()
+        }
     }
+    
     @objc func leftButtonTapped(){
         dismiss(animated: true)
     }
