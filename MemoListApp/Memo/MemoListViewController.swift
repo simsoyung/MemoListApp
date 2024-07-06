@@ -42,8 +42,6 @@ class MemoListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingNavigationBarButton()
-        //list = realm.objects(List.self)
-        print("테이블뷰에 뜨는 리스트",list, list.count)
         NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,7 +104,8 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.reloadData()
             }
         }
-        saveAction.image = UIImage(systemName: "flag.fill")
+        let image = data.importantButton ? "flag.fill" : "flag"
+        saveAction.image = UIImage(systemName: image )
         saveAction.backgroundColor = .systemTeal
         deleteAction.image = UIImage(systemName: "trash.fill")
         deleteAction.backgroundColor = .red

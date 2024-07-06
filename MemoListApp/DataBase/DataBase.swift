@@ -18,6 +18,10 @@ final class List: Object {
     @Persisted var checkButton: Bool = false
     @Persisted var importantButton: Bool = false
     
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
     convenience init(memoName: String, memoDetail: String?, category: String?, creatDate: Date, deadlineDate: String?, checkButton: Bool, importantButton: Bool) {
         self.init()
         self.memoName = memoName
