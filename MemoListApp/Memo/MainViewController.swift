@@ -23,6 +23,7 @@ final class MainViewController: BaseViewController {
     lazy var insertButton = UIButton(configuration: buttonConfig)
     lazy var calendarButton = UIButton(configuration: buttonConfig)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    var willList: Results<List>!
 
     static func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -42,19 +43,27 @@ final class MainViewController: BaseViewController {
     }()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
+        NotificationCenter.default.addObserver(self,selector: #selector(self.didDismissInsert(_:)), name: NSNotification.Name("insertViewController"),object: nil
+        )
         let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM.dd"
+        formatter.dateFormat = "yyMMdd"
         let dateString = formatter.string(from: Date())
+        guard let dateNum = Int("\(dateString)") else { return }
         let filteredItem0 = realm.objects(List.self).filter("deadlineDate == '\(dateString)'")
         selectedList[2][0] = String(filteredItem0.count)
-        let filteredItem1 = realm.objects(List.self)
+        let filteredItem1 = realm.objects(List.self).filter { item in
+            if let num = Int(item.deadlineDate ?? "") {
+                return num > dateNum
+            }
+            return false
+        }
+        print(filteredItem1)
         selectedList[2][1] = String(filteredItem1.count)
 
         let filteredItem2 = realm.objects(List.self)
         selectedList[2][2] = String(filteredItem2.count)
         
-        let filteredItem3 = realm.objects(List.self)
+        let filteredItem3 = realm.objects(List.self).filter("importantButton == true")
         selectedList[2][3] = String(filteredItem3.count)
         
         let filteredItem4 = realm.objects(List.self).filter("checkButton == true")
@@ -64,6 +73,7 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         list = realm.objects(List.self)
+        print(realm.configuration.fileURL)
     }
     override func configureView() {
         super.configureView()
@@ -103,8 +113,8 @@ final class MainViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-    @objc func insertViewController(_ noti: Notification) {
-        OperationQueue.main.addOperation {
+    @objc func didDismissInsert(_ noti: Notification) {
+        DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
@@ -135,19 +145,25 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoCollectionViewCell.id, for: indexPath) as! MemoCollectionViewCell
         let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM.dd"
+        formatter.dateFormat = "yyMMdd"
         let dateString = formatter.string(from: Date())
+        guard let dateNum = Int("\(dateString)") else { return }
         if indexPath.row == 0 {
             let filteredItems = realm.objects(List.self).filter("deadlineDate == '\(dateString)'")
             let newViewController = MemoListViewController()
             newViewController.list = filteredItems
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 1 {
-            print(1)
-            let filteredItems = realm.objects(List.self).filter("deadlineDate == '\(dateString)'")
-            print("필터된 리스트",filteredItems)
+            let filteredItems = realm.objects(List.self).filter { item in
+                if let num = Int(item.deadlineDate ?? "") {
+                    if num > dateNum {
+                        print(num)
+                    }
+                }
+                return true
+            }
             let newViewController = MemoListViewController()
-            newViewController.list = filteredItems
+            //newViewController.list = filteredItems
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 2 {
             print(2)
@@ -157,7 +173,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 3 {
             print(3)
-            let filteredItems = realm.objects(List.self).filter("checkButton == true")
+            let filteredItems = realm.objects(List.self).filter("importantButton == true")
             print("필터된 리스트",filteredItems)
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             let newViewController = MemoListViewController()

@@ -95,7 +95,10 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let data = list[indexPath.row]
         let saveAction = UIContextualAction(style: .normal, title: nil) { (action, view, completionHandler) in
-            print("좋아요!")
+            try! self.realm.write{
+                self.list[indexPath.row].importantButton.toggle()
+                tableView.reloadData()
+                }
             }
         let deleteAction = UIContextualAction(style: .normal, title: nil) { (action, view, completionHandler) in
             try! self.realm.write{
@@ -103,7 +106,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.reloadData()
             }
         }
-        saveAction.image = UIImage(systemName: "hand.thumbsup")
+        saveAction.image = UIImage(systemName: "flag.fill")
         saveAction.backgroundColor = .systemTeal
         deleteAction.image = UIImage(systemName: "trash.fill")
         deleteAction.backgroundColor = .red

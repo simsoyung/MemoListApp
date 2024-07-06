@@ -16,8 +16,9 @@ final class List: Object {
     @Persisted var creatDate: Date // 생성일(필수)
     @Persisted var deadlineDate: String?
     @Persisted var checkButton: Bool = false
+    @Persisted var importantButton: Bool = false
     
-    convenience init(memoName: String, memoDetail: String?, category: String?, creatDate: Date, deadlineDate: String?, checkButton: Bool) {
+    convenience init(memoName: String, memoDetail: String?, category: String?, creatDate: Date, deadlineDate: String?, checkButton: Bool, importantButton: Bool) {
         self.init()
         self.memoName = memoName
         self.memoDetail = memoDetail

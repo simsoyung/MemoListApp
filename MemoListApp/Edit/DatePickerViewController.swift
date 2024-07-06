@@ -52,7 +52,7 @@ final class DatePickerViewController: BaseViewController {
     }
     @objc func dateChange(_ sender: UIDatePicker){
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yy.MM.dd"
+        dateformatter.dateFormat = "yyMMdd"
         let date = dateformatter.string(from: sender.date)
         selectedLabel.text = date
     }

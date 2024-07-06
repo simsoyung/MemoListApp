@@ -25,8 +25,9 @@ final class InsertViewController: BaseViewController {
         super.viewDidLoad()
         navigationItem.title = "새로운 할 일"
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.post(name: insertViewController, object: nil, userInfo: nil)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(name: NSNotification.Name("insertViewController"), object: nil, userInfo: nil)
     }
     override func configureView() {
         super.configureView()
@@ -124,7 +125,7 @@ final class InsertViewController: BaseViewController {
             view.makeToast("제목을 입력해주세요.", duration: 3.0, position: .bottom, title: "알림")
             return
         }
-        let memo = List(memoName: title, memoDetail: content, category: tagAddView.resultLabel.text, creatDate: Date(), deadlineDate: dateAddView.resultLabel.text, checkButton: false)
+        let memo = List(memoName: title, memoDetail: content, category: tagAddView.resultLabel.text, creatDate: Date(), deadlineDate: dateAddView.resultLabel.text, checkButton: false, importantButton: false)
         try! realm.write {
             realm.add(memo)
             print("성공")
