@@ -13,18 +13,26 @@ import SnapKit
 final class InsertViewController: BaseViewController {
 
     let insertViewController: Notification.Name = Notification.Name("insertViewController")
+    
     let realm = try! Realm()
+    let repository = Repository()
+    var folder: Folder?
+    var list: [MemoList] = []
+    
     var priority: ((String) -> Void)?
     let textView = TextFieldView()
     let dateAddView = ContentsView(frame: .zero, textLabel: "마감일")
     let tagAddView = ContentsView(frame: .zero, textLabel: "태그")
     let priorityAddView = ContentsView(frame: .zero, textLabel: "우선 순위")
     let imageAddView = ContentsView(frame: .zero, textLabel: "이미지 추가")
-    var onDismiss: (() -> Void)?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "새로운 할 일"
+        if let folder = folder {
+            let value = folder.detail
+            list = Array(value)
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -125,15 +133,14 @@ final class InsertViewController: BaseViewController {
             view.makeToast("제목을 입력해주세요.", duration: 3.0, position: .bottom, title: "알림")
             return
         }
-        let memo = List(memoName: title, memoDetail: content, category: tagAddView.resultLabel.text, creatDate: Date(), deadlineDate: dateAddView.resultLabel.text, checkButton: false, importantButton: false)
-        try! realm.write {
-            realm.add(memo)
-            print("성공")
+        //var memo = MemoList()
+        let memoItem = MemoList(memoName: title, memoDetail: content, category: tagAddView.resultLabel.text ?? "", creatDate: Date(), deadlineDate: dateAddView.resultLabel.text ?? "", checkButton: false, importantButton: false)
+        if let folder = folder {
+            repository.createItem(memoItem, folder: folder)
+        } else {
+            print("nil?????")
         }
-        NotificationCenter.default.post(name: insertViewController, object: nil, userInfo: nil)
-        dismiss(animated: true){
-            self.onDismiss?()
-        }
+        dismiss(animated: true)
     }
     
     @objc func leftButtonTapped(){

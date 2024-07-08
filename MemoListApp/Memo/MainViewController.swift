@@ -12,17 +12,13 @@ import FSCalendar
 
 final class MainViewController: BaseViewController {
     let insertViewController: Notification.Name = Notification.Name("insertViewController")
-    var selectedList = [
-    ["text.badge.checkmark","calendar","tray.fill","flag.fill","checkmark" ],
-    ["오늘","예정","전체","깃발 표시","완료됨"],
-    ["", "", "", "", ""]
-    ]
-    var colorList: [UIColor] = [UIColor.systemBlue,UIColor.systemRed,UIColor.systemGray,UIColor.systemYellow,UIColor.systemGreen]
-    var list: Results<List>!
+    var list: [MemoList] = []
+    var folderList: [Folder] = []
+    let repository = Repository()
+    var buttonColor: UIColor?
+    var folder: Folder?
     let realm = try! Realm()
-    let buttonConfig = UIButton.Configuration.plain()
-    lazy var insertButton = UIButton(configuration: buttonConfig)
-    lazy var calendarButton = UIButton(configuration: buttonConfig)
+
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
 
     static func layout() -> UICollectionViewLayout {
@@ -41,52 +37,27 @@ final class MainViewController: BaseViewController {
         label.textAlignment = .left
         return label
     }()
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyMMdd"
-        let dateString = formatter.string(from: Date())
-        guard let dateNum = Int("\(dateString)") else { return }
-        let filteredItem0 = realm.objects(List.self).filter("deadlineDate == '\(dateString)'")
-        selectedList[2][0] = String(filteredItem0.count)
-        let filteredItem1 = realm.objects(List.self).filter { item in
-            if let num = Int(item.deadlineDate ?? "") {
-                return num > dateNum
-            }
-            return false
-        }
-        selectedList[2][1] = String(filteredItem1.count)
-
-        let filteredItem2 = realm.objects(List.self)
-        selectedList[2][2] = String(filteredItem2.count)
-        
-        let filteredItem3 = realm.objects(List.self).filter("importantButton == true")
-        selectedList[2][3] = String(filteredItem3.count)
-        
-        let filteredItem4 = realm.objects(List.self).filter("checkButton == true")
-        selectedList[2][4] = String(filteredItem4.count)
         collectionView.reloadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        list = realm.objects(List.self)
         print(realm.configuration.fileURL)
+        folderList = repository.fetchFolder()
+        if let folder = folder {
+            let value = folder.detail
+            list = Array(value)
+        }
     }
     override func configureView() {
         super.configureView()
-        insertButton.contentMode = .center
-        insertButton.settingButton(text: "새로운 할 일", imageName: "plus.circle.fill")
-        calendarButton.settingButton(text: "캘린더", imageName: "list.clipboard.fill")
-        insertButton.addTarget(self, action: #selector(insertClicked), for: .touchUpInside)
-        calendarButton.addTarget(self, action: #selector(calendarClicked), for: .touchUpInside)
-        
     }
     override func configureHierarchy() {
         view.addSubview(headerLabel)
         view.addSubview(collectionView)
-        view.addSubview(insertButton)
-        view.addSubview(calendarButton)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(MemoCollectionViewCell.self, forCellWithReuseIdentifier: MemoCollectionViewCell.id)
@@ -100,43 +71,20 @@ final class MainViewController: BaseViewController {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(headerLabel.snp.bottom).offset(10)
         }
-        insertButton.snp.makeConstraints { make in
-            make.bottom.leading.equalTo(view.safeAreaLayoutGuide).inset(30)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(40)
-        }
-        calendarButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(40)
-        }
     }
-    @objc func insertClicked(){
-        let insertView = InsertViewController()
-        let nav = UINavigationController(rootViewController: insertView)
-        nav.modalPresentationStyle = .pageSheet
-        insertView.onDismiss = {
-            self.viewWillAppear(true)
-            self.collectionView.reloadData()
-        }
-        self.present(nav, animated: true )
-    }
-    @objc func calendarClicked(){
-        let newViewController = MemoListViewController()
-        self.navigationController?.pushViewController(newViewController, animated: true)
-    }
+
 }
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        selectedList[0].count
+        folderList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoCollectionViewCell.id, for: indexPath) as! MemoCollectionViewCell
-        cell.collectionCell.listimageView.image = UIImage(systemName: selectedList[0][indexPath.row])
-        cell.collectionCell.typeLabel.text = selectedList[1][indexPath.row]
-        cell.collectionCell.listimageView.backgroundColor = colorList[indexPath.row]
-        cell.collectionCell.numLabel.text = "\(selectedList[2][indexPath.row])"
+        cell.collectionCell.listimageView.image = UIImage(systemName: folderList[indexPath.row].option ?? "star")
+        cell.collectionCell.typeLabel.text = folderList[indexPath.row].name
+        cell.collectionCell.listimageView.backgroundColor = UIColor(hexCode: "\(folderList[indexPath.row].cellColor)")
+        cell.collectionCell.numLabel.text = "\(folderList[indexPath.row].detail.count)"
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -146,41 +94,42 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let dateString = formatter.string(from: Date())
         guard Int("\(dateString)") != nil else { return }
         if indexPath.row == 0 {
-            var filteredItems = realm.objects(List.self).filter("deadlineDate == '\(dateString)'")
+            let filteredItems = realm.objects(MemoList.self).filter("deadlineDate == '\(dateString)'")
             let newViewController = MemoListViewController()
-            newViewController.list = filteredItems
+            newViewController.list = Array(filteredItems)
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 1 {
-            var filteredItems = realm.objects(List.self)
-//                .filter { item in
-//                if let itemDate = formatter.date(from: item.deadlineDate ?? ""),
-//                   let todayDate = formatter.date(from: dateString) {
-//                    return itemDate > todayDate
-//                }
-//                return false
-//            }
+            let filteredItems = realm.objects(MemoList.self)
+                .filter { item in
+                if let itemDate = formatter.date(from: item.deadlineDate ?? ""),
+                   let todayDate = formatter.date(from: dateString) {
+                    return itemDate > todayDate
+                }
+                return false
+            }
+            
             let newViewController = MemoListViewController()
-            let item = Array(filteredItems)
-            //newViewController.list = item
+            newViewController.list = Array(filteredItems)
+            cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 2 {
-            let filteredItems = realm.objects(List.self)
+            let filteredItems = realm.objects(MemoList.self)
             let newViewController = MemoListViewController()
-            newViewController.list = filteredItems
+            newViewController.list = Array(filteredItems)
+            cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 3 {
-            let filteredItems = realm.objects(List.self).filter("importantButton == true")
+            let filteredItems = realm.objects(MemoList.self).filter("importantButton == true")
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             let newViewController = MemoListViewController()
-            newViewController.list = filteredItems
+            newViewController.list = Array(filteredItems)
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else {
-            let filteredItems = realm.objects(List.self).filter("checkButton == true")
+            let filteredItems = realm.objects(MemoList.self).filter("checkButton == true")
             let newViewController = MemoListViewController()
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
-            newViewController.list = filteredItems
+            newViewController.list = Array(filteredItems)
             self.navigationController?.pushViewController(newViewController, animated: true)
         }
-        
     }
 }

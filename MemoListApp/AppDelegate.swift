@@ -6,14 +6,30 @@
 //
 
 import UIKit
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let config = Realm.Configuration(schemaVersion: 3) {
+            //마이그레이션이 꼭 왜 필요할까?
+            //왜 if else로 쓰지 않을까?
+            migration, oldSchemaVersion in
+            //변경된 테이블에 대해서 알려주기
+            if oldSchemaVersion < 1 {
+                //폴더 컬럼 추가
+                //단순 컬럼, 테이블 추가나 삭제등의 경우에는 코드 x
+            }
+            if oldSchemaVersion < 2 {
+                //컬럼명을 변경했을경우, 안에 들어있던 데이터를 옮겨줘야함
+                //migration.renameProperty(onType: MemoList.className(), from: "favorite", to: "isLike")
+            }
+            if oldSchemaVersion < 3 {
+
+            }
+        }
+        Realm.Configuration.defaultConfiguration = config
         return true
     }
 

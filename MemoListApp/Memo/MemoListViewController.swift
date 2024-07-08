@@ -10,7 +10,6 @@ import RealmSwift
 import SnapKit
 
 class MemoListViewController: BaseViewController {
-    let insertViewController: Notification.Name = Notification.Name("insertViewController")
     lazy var menuItems: [UIAction] = {
         return [
             UIAction(title: "날짜순", handler: { _ in
@@ -31,33 +30,41 @@ class MemoListViewController: BaseViewController {
         label.textAlignment = .left
         return label
     }()
-    var list: Results<List>!
+    let repository = Repository()
     let realm = try! Realm()
     var tableview = UITableView()
     var changeRadio: (() -> Bool)?
+    var folder: Folder?
+    var list: [MemoList] = []
+    var item: Results<MemoList>!
+    let buttonConfig = UIButton.Configuration.plain()
+    lazy var insertButton = UIButton(configuration: buttonConfig)
+    lazy var calendarButton = UIButton(configuration: buttonConfig)
     
-    override func viewDidAppear(_ animated: Bool) {
-        tableview.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
+        if let folder = folder {
+            let value = folder.detail
+            list = Array(value)
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         settingNavigationBarButton()
-        NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.post(name: insertViewController, object: nil, userInfo: nil)
-    }
+    
     @objc func insertViewController(_ noti: Notification) {
-        OperationQueue.main.addOperation {
+        DispatchQueue.main.async {
             self.tableview.reloadData()
         }
     }
     func deadlineDateReload(){
-        list = realm.objects(List.self).sorted(byKeyPath: "deadlineDate", ascending: true)
+        item = realm.objects(MemoList.self).sorted(byKeyPath: "deadlineDate", ascending: true)
         tableview.reloadData()
     }
     func makeDateReload(){
-        list = realm.objects(List.self).sorted(byKeyPath: "creatDate", ascending: false)
+        item = realm.objects(MemoList.self).sorted(byKeyPath: "creatDate", ascending: false)
         tableview.reloadData()
     }
     
@@ -72,10 +79,17 @@ class MemoListViewController: BaseViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(MemoTableViewCell.self, forCellReuseIdentifier: MemoTableViewCell.id)
+        insertButton.contentMode = .center
+        insertButton.settingButton(text: "새로운 할 일", imageName: "plus.circle.fill")
+        calendarButton.settingButton(text: "캘린더", imageName: "list.clipboard.fill")
+        insertButton.addTarget(self, action: #selector(insertClicked), for: .touchUpInside)
+        calendarButton.addTarget(self, action: #selector(calendarClicked), for: .touchUpInside)
     }
     override func configureHierarchy() {
         view.addSubview(tableview)
         view.addSubview(headerLabel)
+        view.addSubview(insertButton)
+        view.addSubview(calendarButton)
     }
     override func configureConstraints() {
         headerLabel.snp.makeConstraints { make in
@@ -86,6 +100,27 @@ class MemoListViewController: BaseViewController {
             make.top.equalTo(headerLabel.snp.bottom)
             make.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
+        insertButton.snp.makeConstraints { make in
+            make.bottom.leading.equalTo(view.safeAreaLayoutGuide).inset(30)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(40)
+        }
+        calendarButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(40)
+        }
+    }
+    @objc func insertClicked(){
+        let insertView = InsertViewController()
+        let nav = UINavigationController(rootViewController: insertView)
+        nav.modalPresentationStyle = .pageSheet
+        insertView.folder = folder
+        self.present(nav, animated: true )
+    }
+    @objc func calendarClicked(){
+        let newViewController = MemoListViewController()
+        self.navigationController?.pushViewController(newViewController, animated: true)
     }
 }
 
@@ -98,11 +133,10 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.reloadData()
                 }
             }
-        let deleteAction = UIContextualAction(style: .normal, title: nil) { (action, view, completionHandler) in
-            try! self.realm.write{
-                self.realm.delete(data)
-                tableView.reloadData()
-            }
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { [self] (action, view, completionHandler) in
+            repository.removeItem(self.list[indexPath.row])
+            list = repository.fetchItem()
+            tableview.reloadData()
         }
         let image = data.importantButton ? "flag.fill" : "flag"
         saveAction.image = UIImage(systemName: image )
@@ -121,7 +155,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         let data = list[indexPath.row]
         cell.titleNameLabel.text = data.memoName
         cell.detailContentLabel.text = data.memoDetail
-        cell.categoryLabel.text = data.category
+        cell.categoryLabel.text = data.main.first?.name
         cell.dateLabel.text = data.deadlineDate
         if data.checkButton == false {
             cell.radioButton.setImage(UIImage(systemName: "circle"), for: .normal)

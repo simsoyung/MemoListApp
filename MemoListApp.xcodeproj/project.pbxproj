@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		46A797C52C3686C8008C86BA /* MemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A797C42C3686C8008C86BA /* MemoCollectionViewCell.swift */; };
 		46D6BBCB2C395F2500A8B683 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 46D6BBCA2C395F2500A8B683 /* FSCalendar */; };
+		46D6BBD52C3BC5C600A8B683 /* repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D6BBD42C3BC5C600A8B683 /* repository.swift */; };
 		46E28A5E2C33E70500AB3843 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A5D2C33E70500AB3843 /* AppDelegate.swift */; };
 		46E28A602C33E70500AB3843 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */; };
 		46E28A672C33E70800AB3843 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46E28A662C33E70800AB3843 /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		46A797C42C3686C8008C86BA /* MemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCollectionViewCell.swift; sourceTree = "<group>"; };
+		46D6BBD42C3BC5C600A8B683 /* repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repository.swift; sourceTree = "<group>"; };
 		46E28A5A2C33E70500AB3843 /* MemoListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E28A5D2C33E70500AB3843 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46E28A5F2C33E70500AB3843 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 		46E28A772C33E8CF00AB3843 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
+				46D6BBD42C3BC5C600A8B683 /* repository.swift */,
 				46E28A782C33E8DE00AB3843 /* DataBase.swift */,
 			);
 			path = DataBase;
@@ -281,6 +284,7 @@
 				46A797C52C3686C8008C86BA /* MemoCollectionViewCell.swift in Sources */,
 				46E28A8D2C33FC0C00AB3843 /* Extension.swift in Sources */,
 				46E28A9F2C35407600AB3843 /* TagViewController.swift in Sources */,
+				46D6BBD52C3BC5C600A8B683 /* repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
