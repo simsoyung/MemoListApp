@@ -41,17 +41,32 @@ class MemoListViewController: BaseViewController {
     lazy var insertButton = UIButton(configuration: buttonConfig)
     lazy var calendarButton = UIButton(configuration: buttonConfig)
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("insertViewController"), object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(insertViewController(_:)), name: NSNotification.Name("insertViewController"), object: nil)
+        tableview.reloadData()
+        
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        settingNavigationBarButton()
         if let folder = folder {
             let value = folder.detail
             list = Array(value)
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        settingNavigationBarButton()
     }
     
     @objc func insertViewController(_ noti: Notification) {
@@ -143,7 +158,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         saveAction.backgroundColor = .systemTeal
         deleteAction.image = UIImage(systemName: "trash.fill")
         deleteAction.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [saveAction, deleteAction ])
+        let configuration = UISwipeActionsConfiguration(actions: [saveAction, deleteAction])
         return configuration
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

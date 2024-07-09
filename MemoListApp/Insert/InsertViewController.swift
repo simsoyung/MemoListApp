@@ -26,13 +26,15 @@ final class InsertViewController: BaseViewController {
     let priorityAddView = ContentsView(frame: .zero, textLabel: "우선 순위")
     let imageAddView = ContentsView(frame: .zero, textLabel: "이미지 추가")
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let folder = folder {
             let value = folder.detail
             list = Array(value)
         }
+        print(folder)
+        print("메모 리스트", list)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -104,16 +106,11 @@ final class InsertViewController: BaseViewController {
         [ UIAlertAction(title: "최근등록순", style: .default, handler: { action in
             self.priority?(action.title ?? "")
             self.priorityAddView.resultLabel.text = action.title
-//            self.priority = { value in
-//                self.priorityAddView.resultLabel.text = value
-//            }
         }),
           UIAlertAction(title: "날짜순", style: .default, handler: { action in
             self.priority?(action.title ?? "")
             self.priorityAddView.resultLabel.text = action.title
-//            self.priority = { value in
-//                self.priorityAddView.resultLabel.text = value
-//            }
+
         }),
           UIAlertAction(title: "닫기", style: .destructive)
         ].forEach{ actionSheet.addAction($0) }
@@ -133,14 +130,18 @@ final class InsertViewController: BaseViewController {
             view.makeToast("제목을 입력해주세요.", duration: 3.0, position: .bottom, title: "알림")
             return
         }
-        //var memo = MemoList()
         let memoItem = MemoList(memoName: title, memoDetail: content, category: tagAddView.resultLabel.text ?? "", creatDate: Date(), deadlineDate: dateAddView.resultLabel.text ?? "", checkButton: false, importantButton: false)
+        //let folderItem = Folder(name: title, regDate: Date(), cellColor: "", detail: memoItem)
+        print(memoItem, "추가할거다")
+        print(folder?.detail.first?.id)
         if let folder = folder {
+            print(folder, "폴더가 뭔데")
             repository.createItem(memoItem, folder: folder)
         } else {
             print("nil?????")
         }
         dismiss(animated: true)
+        
     }
     
     @objc func leftButtonTapped(){

@@ -26,6 +26,14 @@ class Folder: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+//    convenience init(name: String, option: String? = nil, regDate: Date, cellColor: String, memoType: MemoType? = nil) {
+//        self.init()
+//        self.name = name
+//        self.option = option
+//        self.regDate = regDate
+//        self.cellColor = cellColor
+//        self.memoType = memoType
+//    }
 }
 
  class MemoList: Object {

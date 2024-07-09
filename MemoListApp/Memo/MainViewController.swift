@@ -50,6 +50,7 @@ final class MainViewController: BaseViewController {
         if let folder = folder {
             let value = folder.detail
             list = Array(value)
+            print("dddddd",folder)
         }
     }
     override func configureView() {
@@ -96,6 +97,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         if indexPath.row == 0 {
             let filteredItems = realm.objects(MemoList.self).filter("deadlineDate == '\(dateString)'")
             let newViewController = MemoListViewController()
+            let folderitem = folderList[indexPath.row]
+            newViewController.folder = folderitem
             newViewController.list = Array(filteredItems)
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 1 {
@@ -109,12 +112,16 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
             
             let newViewController = MemoListViewController()
+            let folderitem = folderList[indexPath.row]
+            newViewController.folder = folderitem
             newViewController.list = Array(filteredItems)
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else if indexPath.row == 2 {
             let filteredItems = realm.objects(MemoList.self)
             let newViewController = MemoListViewController()
+            let folderitem = folderList[indexPath.row]
+            newViewController.folder = folderitem
             newViewController.list = Array(filteredItems)
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             self.navigationController?.pushViewController(newViewController, animated: true)
@@ -122,11 +129,15 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             let filteredItems = realm.objects(MemoList.self).filter("importantButton == true")
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             let newViewController = MemoListViewController()
+            let folderitem = folderList[indexPath.row]
+            newViewController.folder = folderitem
             newViewController.list = Array(filteredItems)
             self.navigationController?.pushViewController(newViewController, animated: true)
         } else {
             let filteredItems = realm.objects(MemoList.self).filter("checkButton == true")
             let newViewController = MemoListViewController()
+            let folderitem = folderList[indexPath.row]
+            newViewController.folder = folderitem
             cell.collectionCell.numLabel.text = "\(filteredItems.count)"
             newViewController.list = Array(filteredItems)
             self.navigationController?.pushViewController(newViewController, animated: true)
